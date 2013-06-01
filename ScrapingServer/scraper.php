@@ -1,6 +1,6 @@
 <?php
-    interface scraper{
-	public $scaperId;
-	public function getData();
-    }
+	interface scraper{
+		public $scaperId;
+		public function getData();
+	}
 ?>
