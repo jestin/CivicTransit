@@ -6,9 +6,15 @@
 			switch($scraperId) {
 				case "kc-ata-vehicles-realtime":
 					$scraper = new kcMetroScraper;
-					$scraper->getData();
+					break;
+				default:
+					throw new Exception("unknown scraper");
 					break;
 			}
+
+			$data = $scraper->getData();
+
+			/*** do something with the data ***/
 		}
 	}
 ?>
