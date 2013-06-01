@@ -1,0 +1,48 @@
+{
+	"message": {
+		"header": {
+			"gtfs_realtime_version": "1.0",
+			"incrementality": "FULL_DATASET",
+			"timestamp": "uint64, seconds since 1970 epoch"
+		},
+		"entity": {
+			"id":"md5",
+			"vehicle": [
+				{
+					"trip": {
+						"trip_id":"string",
+						"route_id":"string"
+					},
+					"vehicle": {
+						"id":"string",
+						"label":"string",
+						"license_plate":"string"
+					},
+					"position": {
+						"latitude":"float",
+						"longitude":"float",
+						"bearing":"float"
+					},
+					"timestamp":""
+				},
+				{
+					"trip": {
+						"trip_id":"string",
+						"route_id":"string"
+					},
+					"vehicle": {
+						"id":"string",
+						"label":"string",
+						"license_plate":"string"
+					},
+					"position": {
+						"latitude":"float",
+						"longitude":"float",
+						"bearing":"float"
+					},
+					"timestamp":""
+				}
+			]
+		}
+  }
+}

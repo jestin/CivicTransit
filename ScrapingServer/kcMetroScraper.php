@@ -21,8 +21,11 @@
 			$routeList = $response["d"];
 
 			ob_start();
+			$theMessage = array();
+			$theMessage["message"] = array();
+			$theMessage["message"]["header"] = array("gtfs_realtime_version"=>"1.0","incrementality"=>"FULL_DATASET");
 
-			for($i = 0; $i<sizeof($routeList); $i++){
+			/*for($i = 0; $i<sizeof($routeList); $i++){
 				echo "<h1>".$routeList[$i]["name"]."</h1>";
 				$data_string = '{routeID: '.$routeList[$i]["id"].'}';
 				echo $data_string;
@@ -42,7 +45,9 @@
 			}
 			$endTime = microtime(true);
 			$pageTime = $endTime-$startTime;
-			echo "<h1>".$pageTime."</h1>";
+			echo "<h1>".$pageTime."</h1>";*/
+			
+			print_r($theMessage);
 
 			return ob_get_clean();
 		}
