@@ -16,8 +16,6 @@
 
 			$data = $scraper->getData();
 			$destination->send($data);
-
-			/*** do something with the data ***/
 		}
 	}
 ?>
