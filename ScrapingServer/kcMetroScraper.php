@@ -1,8 +1,7 @@
 <?php
-	require_once "scraper.php"
-	class kcMetroScraper implements scraper
-	{
-		public funciton getData(){
+	require_once "scraper.php";
+	class KcMetroScraper implements scraper {
+		public function getData(){
 			$startTime = microtime(true);
 			//$baseURL = "http://tmweb.pacebus.com/TMWebWatch/";
 			$baseURL = "http://www.kc-metro.com/tmwebwatch/";
