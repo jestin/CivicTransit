@@ -1,7 +1,7 @@
 <?php
 	require_once "dataDestination.php";
 	
-	class kcMetroDestination implements dataDestination {
+	class kcMetroRealtimeDestination implements dataDestination {
 		public function send($data) {
 		}
 	}
