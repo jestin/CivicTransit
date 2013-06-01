@@ -1,5 +1,6 @@
 <?php
 	require_once "scraper.php";
+
 	class KcMetroScraper implements scraper {
 		public $scraperId = "kc-ata-vehicles-realtime";
 
