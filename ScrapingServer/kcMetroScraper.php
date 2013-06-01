@@ -1,6 +1,8 @@
 <?php
 	require_once "scraper.php";
 	class KcMetroScraper implements scraper {
+		public $scraperId = "kc-ata-vehicles-realtime";
+
 		public function getData(){
 			$startTime = microtime(true);
 			//$baseURL = "http://tmweb.pacebus.com/TMWebWatch/";

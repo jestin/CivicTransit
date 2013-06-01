@@ -1,5 +1,5 @@
 <?php
     interface scraper{
-		public function getData();
+	public function getData();
     }
 ?>
