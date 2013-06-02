@@ -21,7 +21,7 @@ class Json extends PhpArray
     public function encode(Protobuf\Message $message)
     {
         $data = $this->encodeMessage($message);
-        return json_encode($data);
+        return json_encode($data, JSON_PRETTY_PRINT);
     }
 
     /**

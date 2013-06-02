@@ -56,26 +56,27 @@
 					$thisInfo = array();
 					$thisInfo["id"] = $idNumber;
 					$idNumber++;
+					$thisInfo["vehicle"] = array();
 					if(sizeof($theRoute)>1){
 						// Multiple bus routes have only route_id assigned.
-						$thisInfo["trip_update"] = array(
+						$thisInfo["vehicle"]["trip_update"] = array(
 							"route_id"=>getRoute($theRoute[$j])
 						);
 					}else{
 						// Single-bus routes have trip_id and route_id assigned.
-						$thisInfo["trip_update"] = array(
+						$thisInfo["vehicle"]["trip_update"] = array(
 							"trip_id"=>getTrip($theRoute[$j]),
 							"route_id"=>getRoute($theRoute[$j])
 						);
 					}
 					
-					$thisInfo["vehicle"] = array(
+					$thisInfo["vehicle"]["vehicle"] = array(
 						"id"=>$theRoute[$j]["propertyTag"],
 						"label"=>$theRoute[$j]["propertyTag"],
 						"license_plate"=>$theRoute[$j]["propertyTag"]
 					);
 					
-					$thisInfo["position"] = array(
+					$thisInfo["vehicle"]["position"] = array(
 						"latitude"=>floatval($theRoute[$j]["lat"]),
 						"longitude"=>floatval($theRoute[$j]["lon"]),
 						"bearing"=>floatval($theRoute[$j]["compassDirection"])
