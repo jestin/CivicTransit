@@ -43,7 +43,8 @@
 					));
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				$theRoute = json_decode(curl_exec($ch),true)["d"];
+				$theRoute = json_decode(curl_exec($ch),true);
+				$theRoute = $theRoute["d"];
 				//print_r($theRoute);
 				curl_close($ch);
 				
@@ -93,7 +94,8 @@
 			// Message output
 			ob_start();
 			header('Content-type: application/json');
-			echo json_encode($theMessage, JSON_PRETTY_PRINT);
+			$returnMessage = json_encode($theMessage, JSON_PRETTY_PRINT);
+			echo $returnMessage;
 			return ob_get_clean();
 		}
 		
