@@ -7,9 +7,12 @@
 
 		public function getData(){
 			$startTime = microtime(true);
+			
+			// This scraper works with any TMWebWatch system, such as KCATA or Pace in Suburban Chicago
 			$baseURL = "http://www.kc-metro.com/tmwebwatch/";
 			//$baseURL = "http://tmweb.pacebus.com/TMWebWatch/";
 
+			// Retrieve all available routes in a list, $routeList
 			$routeListGetter = curl_init();
 			curl_setopt($routeListGetter, CURLOPT_URL, $baseURL."Arrivals.aspx/getRoutes");
 			curl_setopt($routeListGetter, CURLOPT_POST, true);
@@ -20,8 +23,8 @@
 			$response = json_decode(curl_exec($routeListGetter),true);
 			curl_close($routeListGetter);
 			$routeList = $response["d"];
-
-			ob_start();
+			
+			// Set up the message and its header information
 			$theMessage = array();
 			$theMessage["message"] = array();
 			$theMessage["message"]["header"] = array("gtfs_realtime_version"=>"1.0","incrementality"=>"FULL_DATASET","timestamp"=>time());
@@ -29,6 +32,8 @@
 			$theVehicle = array();
 			
 			for($i = 0; $i<sizeof($routeList); $i++){
+			
+				
 				$data_string = '{routeID: '.$routeList[$i]["id"].'}';
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $baseURL."GoogleMap.aspx/getVehicles");
@@ -42,6 +47,7 @@
 				//print_r($theRoute);
 				curl_close($ch);
 				
+				// Given a route in $theRoute, iterate over the vehicles servicing each route
 				for($j = 0; $j<sizeof($theRoute); $j++){
 					$thisInfo = array();
 					
@@ -63,15 +69,18 @@
 						"label"=>$theRoute[$j]["propertyTag"],
 						"license_plate"=>$theRoute[$j]["propertyTag"]
 					);
+					
 					$thisInfo["position"] = array(
 						"latitude"=>floatval($theRoute[$j]["lat"]),
 						"longitude"=>floatval($theRoute[$j]["lon"]),
 						"bearing"=>floatval($theRoute[$j]["compassDirection"])
 					);
+					
 					$theVehicle[] = $thisInfo;
 				}
 			}
 			
+			// Complete message generation
 			$theEntity["id"] = md5(serialize($theVehicle));
 			$theEntity["vehicle"] = $theVehicle;
 			$theMessage["message"]["entity"] = $theEntity;
@@ -80,6 +89,9 @@
 			$theMessage["generationTime"] = $pageTime;
 			$theMessage["numberOfRoutes"] = sizeof($routeList);
 			$theMessage["numberOfVehicles"] = sizeof($theVehicle);
+			
+			// Message output
+			ob_start();
 			header('Content-type: application/json');
 			echo json_encode($theMessage, JSON_PRETTY_PRINT);
 			return ob_get_clean();
