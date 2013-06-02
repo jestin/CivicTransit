@@ -11,6 +11,7 @@
 		}
 
 		public function getData(){
+			//header('Content-type: application/json');
 			$startTime = microtime(true);
 			
 			// This scraper works with any TMWebWatch system, such as KCATA or Pace in Suburban Chicago
@@ -23,9 +24,10 @@
 			curl_setopt($routeListGetter, CURLOPT_POST, true);
 			curl_setopt($routeListGetter, CURLOPT_HTTPHEADER, array(
 				'Content-Length:0',
-				'Content-Type:application/json;	charset=UTF-8'));
+				'Content-Type:application/json;	charset=UTF-8'
+			));
 			curl_setopt($routeListGetter, CURLOPT_RETURNTRANSFER, true);
-			$response = json_decode(curl_exec($routeListGetter),true);
+			$response = json_decode(curl_exec($routeListGetter), true);
 			curl_close($routeListGetter);
 			$routeList = $response["d"];
 			
@@ -97,7 +99,6 @@
 			
 			// Message output
 			ob_start();
-			header('Content-type: application/json');
 			$returnMessage = json_encode($theMessage, JSON_PRETTY_PRINT);
 			echo $returnMessage;
 			return ob_get_clean();
