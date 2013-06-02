@@ -2,12 +2,13 @@
 	require_once "scraper.php";
 
 	class KcMetroRealtimeScraper implements scraper {
+
 		public $scraperId = "kc-ata-vehicles-realtime";
 
 		public function getData(){
 			$startTime = microtime(true);
-			//$baseURL = "http://tmweb.pacebus.com/TMWebWatch/";
 			$baseURL = "http://www.kc-metro.com/tmwebwatch/";
+			//$baseURL = "http://tmweb.pacebus.com/TMWebWatch/";
 
 			$routeListGetter = curl_init();
 			curl_setopt($routeListGetter, CURLOPT_URL, $baseURL."Arrivals.aspx/getRoutes");
@@ -69,7 +70,6 @@
 					);
 					$theVehicle[] = $thisInfo;
 				}
-				
 			}
 			
 			$theEntity["id"] = md5(serialize($theVehicle));
@@ -78,6 +78,8 @@
 			$endTime = microtime(true);
 			$pageTime = $endTime-$startTime;
 			$theMessage["generationTime"] = $pageTime;
+			$theMessage["numberOfRoutes"] = sizeof($routeList);
+			$theMessage["numberOfVehicles"] = sizeof($theVehicle);
 			header('Content-type: application/json');
 			echo json_encode($theMessage, JSON_PRETTY_PRINT);
 			return ob_get_clean();
