@@ -32,12 +32,10 @@
 			$theMessage = array();
 			$theMessage["message"] = array();
 			$theMessage["message"]["header"] = array("gtfs_realtime_version"=>"1.0","incrementality"=>"FULL_DATASET","timestamp"=>time());
-			$theEntity = array();
-			$theVehicle = array();
+			$theEntities = array();
+			$idNumber = 0;
 			
 			for($i = 0; $i<sizeof($routeList); $i++){
-			
-				
 				$data_string = '{routeID: '.$routeList[$i]["id"].'}';
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $baseURL."GoogleMap.aspx/getVehicles");
@@ -55,15 +53,16 @@
 				// Given a route in $theRoute, iterate over the vehicles servicing each route
 				for($j = 0; $j<sizeof($theRoute); $j++){
 					$thisInfo = array();
-					
+					$thisInfo["id"] = $idNumber;
+					$idNumber++;
 					if(sizeof($theRoute)>1){
 						// Multiple bus routes have only route_id assigned.
-						$thisInfo["trip"] = array(
+						$thisInfo["trip_update"] = array(
 							"route_id"=>""
 						);
 					}else{
 						// Single-bus routes have trip_id and route_id assigned.
-						$thisInfo["trip"] = array(
+						$thisInfo["trip_update"] = array(
 							"trip_id"=>"",
 							"route_id"=>""
 						);
@@ -81,19 +80,15 @@
 						"bearing"=>floatval($theRoute[$j]["compassDirection"])
 					);
 					
-					$theVehicle[] = $thisInfo;
+					$theEntities[] = $thisInfo;
 				}
 			}
-			
-			// Complete message generation
-			$theEntity["id"] = md5(serialize($theVehicle));
-			$theEntity["vehicle"] = $theVehicle;
-			$theMessage["message"]["entity"] = $theEntity;
+			$theMessage["message"]["entities"] = $theEntities;
 			$endTime = microtime(true);
 			$pageTime = $endTime-$startTime;
 			$theMessage["generationTime"] = $pageTime;
 			$theMessage["numberOfRoutes"] = sizeof($routeList);
-			$theMessage["numberOfVehicles"] = sizeof($theVehicle);
+			$theMessage["numberOfVehicles"] = sizeof($theEntities);
 			
 			// Message output
 			ob_start();
