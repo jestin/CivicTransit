@@ -3,9 +3,13 @@
 	
 	class kcMetroRealtimeDestination implements dataDestination {
 		public function send($data) {
-			/*** maybe just for a test, this once should return json to a web service AND a write to a database ***/
-			
 			/*** write to database ***/
+			if (class_exists('Mongo')) {
+				$m = new MongoClient(); // connect
+				$db = $m->selectDB("transit");
+			} else {
+				error_log('Mongo not installed');
+			}
 		}
 	}
 ?>
