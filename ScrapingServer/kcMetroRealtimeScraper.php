@@ -1,5 +1,6 @@
 <?php
-	require_once "scraper.php";
+	require_once("scraper.php");
+	require_once("trip_getter.php");
 
 	class KcMetroRealtimeScraper implements scraper {
 
@@ -58,13 +59,13 @@
 					if(sizeof($theRoute)>1){
 						// Multiple bus routes have only route_id assigned.
 						$thisInfo["trip_update"] = array(
-							"route_id"=>""
+							"route_id"=>getRoute($theRoute[$j])
 						);
 					}else{
 						// Single-bus routes have trip_id and route_id assigned.
 						$thisInfo["trip_update"] = array(
-							"trip_id"=>"",
-							"route_id"=>""
+							"trip_id"=>getTrip($theRoute[$j]),
+							"route_id"=>getRoute($theRoute[$j])
 						);
 					}
 					
