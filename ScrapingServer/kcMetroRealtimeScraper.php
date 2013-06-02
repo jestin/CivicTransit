@@ -36,20 +36,20 @@
 			$theEntities = array();
 			$idNumber = 0;
 			
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $baseURL."GoogleMap.aspx/getVehicles");
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'Content-Type:application/json;	charset=UTF-8'
+			));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			
 			for($i = 0; $i<sizeof($routeList); $i++){
 				$data_string = '{routeID: '.$routeList[$i]["id"].'}';
-				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $baseURL."GoogleMap.aspx/getVehicles");
-				curl_setopt($ch, CURLOPT_POST, true);
-				curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-					'Content-Type:application/json;	charset=UTF-8'
-					));
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				$theRoute = json_decode(curl_exec($ch),true);
 				$theRoute = $theRoute["d"];
 				//print_r($theRoute);
-				curl_close($ch);
 				
 				// Given a route in $theRoute, iterate over the vehicles servicing each route
 				for($j = 0; $j<sizeof($theRoute); $j++){
@@ -85,6 +85,9 @@
 					$theEntities[] = $thisInfo;
 				}
 			}
+			
+			curl_close($ch);
+			
 			$theMessage["message"]["entities"] = $theEntities;
 			$endTime = microtime(true);
 			$pageTime = $endTime-$startTime;
