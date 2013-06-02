@@ -10,7 +10,7 @@ $theData = json_decode($json, true);
 $theMessage = $theData["message"];
 print_r($theMessage);
 
-/*$codec = new DrSlump\Protobuf\Codec\Json();
+$codec = new DrSlump\Protobuf\Codec\Json();
 
 $buf = new transit_realtime\FeedMessage();
 
@@ -41,5 +41,5 @@ $buf = new transit_realtime\FeedMessage();
 	}
 
 $output = $codec->encode($buf);
-echo $output;*/
+echo $output;
 ?>
