@@ -54,7 +54,7 @@
 				// Given a route in $theRoute, iterate over the vehicles servicing each route
 				for($j = 0; $j<sizeof($theRoute); $j++){
 					$thisInfo = array();
-					$thisInfo["id"] = $idNumber;
+					$thisInfo["id"] = $theRoute[$j]["propertyTag"];
 					$idNumber++;
 					$thisInfo["vehicle"] = array();
 					if(sizeof($theRoute)>1){
