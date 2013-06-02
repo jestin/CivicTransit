@@ -43,11 +43,29 @@
 				
 				for($j = 0; $j<sizeof($theRoute); $j++){
 					$thisInfo = array();
-					$thisInfo["trip"] = array();
+					
+					if(sizeof($theRoute)>1){
+						// Multiple bus routes have only route_id assigned.
+						$thisInfo["trip"] = array(
+							"route_id"=>""
+						);
+					}else{
+						// Single-bus routes have trip_id and route_id assigned.
+						$thisInfo["trip"] = array(
+							"trip_id"=>"",
+							"route_id"=>""
+						);
+					}
+					
 					$thisInfo["vehicle"] = array(
 						"id"=>$theRoute[$j]["propertyTag"],
 						"label"=>$theRoute[$j]["propertyTag"],
 						"license_plate"=>$theRoute[$j]["propertyTag"]
+					);
+					$thisInfo["position"] = array(
+						"latitude"=>floatval($theRoute[$j]["lat"]),
+						"longitude"=>floatval($theRoute[$j]["lon"]),
+						"bearing"=>floatval($theRoute[$j]["compassDirection"])
 					);
 					$theVehicle[] = $thisInfo;
 				}
