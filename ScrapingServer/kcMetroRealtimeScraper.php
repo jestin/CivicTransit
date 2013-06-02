@@ -23,12 +23,12 @@
 			ob_start();
 			$theMessage = array();
 			$theMessage["message"] = array();
-			$theMessage["message"]["header"] = array("gtfs_realtime_version"=>"1.0","incrementality"=>"FULL_DATASET");
-
-			/*for($i = 0; $i<sizeof($routeList); $i++){
-				echo "<h1>".$routeList[$i]["name"]."</h1>";
+			$theMessage["message"]["header"] = array("gtfs_realtime_version"=>"1.0","incrementality"=>"FULL_DATASET","timestamp"=>time());
+			$theEntity = array();
+			$theVehicle = array();
+			
+			for($i = 0; $i<sizeof($routeList); $i++){
 				$data_string = '{routeID: '.$routeList[$i]["id"].'}';
-				echo $data_string;
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $baseURL."GoogleMap.aspx/getVehicles");
 				curl_setopt($ch, CURLOPT_POST, true);
@@ -37,19 +37,33 @@
 					));
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				$theRoute = json_decode(curl_exec($ch),true);
-				echo "<pre>";
-				print_r($theRoute);
-				echo "</pre>";
+				$theRoute = json_decode(curl_exec($ch),true)["d"];
+				//print_r($theRoute);
 				curl_close($ch);
+				
+				for($j = 0; $j<sizeof($theRoute); $j++){
+					$thisInfo = array();
+					$thisInfo["trip"] = array();
+					$thisInfo["vehicle"] = array(
+						"id"=>$theRoute[$j]["propertyTag"],
+						"label"=>$theRoute[$j]["propertyTag"],
+						"license_plate"=>$theRoute[$j]["propertyTag"]
+					);
+					$theVehicle[] = $thisInfo;
+				}
+				
 			}
+			
+			$theEntity["id"] = md5(serialize($theVehicle));
+			$theEntity["vehicle"] = $theVehicle;
+			$theMessage["message"]["entity"] = $theEntity;
 			$endTime = microtime(true);
 			$pageTime = $endTime-$startTime;
-			echo "<h1>".$pageTime."</h1>";*/
-			
-			print_r($theMessage);
-
+			$theMessage["generationTime"] = $pageTime;
+			header('Content-type: application/json');
+			echo json_encode($theMessage, JSON_PRETTY_PRINT);
 			return ob_get_clean();
 		}
+		
 	}
 ?>
