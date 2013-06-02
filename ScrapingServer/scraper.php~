@@ -1,12 +1,6 @@
 <?php
-<<<<<<< HEAD
-    interface scraper{
-	public $scaperId;
-	public function getData();
-    }
-=======
 	interface scraper{
+		public function getScraperId();
 		public function getData();
 	}
->>>>>>> 78d53bd6750e24472df9b5cf12cec6d1d2edabf9
 ?>
