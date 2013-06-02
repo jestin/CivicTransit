@@ -8,9 +8,10 @@ $json = file_get_contents('realtimeData.json');
 $theData = json_decode($json, true);
 
 $theMessage = $theData["message"];
-print_r($theMessage);
+//print_r($theMessage);
 
-$codec = new DrSlump\Protobuf\Codec\Json();
+//$codec = new DrSlump\Protobuf\Codec\Json();
+$codec = new DrSlump\Protobuf\Codec\Binary();
 
 $buf = new transit_realtime\FeedMessage();
 

@@ -60,13 +60,13 @@
 					if(sizeof($theRoute)>1){
 						// Multiple bus routes have only route_id assigned.
 						$thisInfo["vehicle"]["trip_update"] = array(
-							"route_id"=>""
+							"route_id"=>$theRoute[$j]["propertyTag"]
 						);
 					}else{
 						// Single-bus routes have trip_id and route_id assigned.
 						$thisInfo["vehicle"]["trip_update"] = array(
-							"trip_id"=>"",
-							"route_id"=>""
+							"trip_id"=>$theRoute[$j]["propertyTag"],
+							"route_id"=>$theRoute[$j]["propertyTag"]
 						);
 					}
 					
