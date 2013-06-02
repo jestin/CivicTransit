@@ -1,7 +1,8 @@
 <?php
-	include("kcMetroRealtimeScraper.php");
-	$myScraper = new KcMetroRealtimeScraper();
-	$theData = $myScraper->getData();
+	require_once "scraperRunner.php";
+	
+	$runner = new scraperRunner();
+	$theData = $runner->runScraper("kc-ata-vehicles-realtime");
 	echo $theData;
 	$outputFile = fopen('../GTFS-Realtime/realtimeData.json', 'c');
 	flock($outputFile, 'LOCK_EX');

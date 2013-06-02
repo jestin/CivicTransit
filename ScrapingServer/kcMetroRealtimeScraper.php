@@ -4,6 +4,10 @@
 	class KcMetroRealtimeScraper implements scraper {
 
 		public $scraperId = "kc-ata-vehicles-realtime";
+		
+		public function getScraperId(){
+			return $scraperId;
+		}
 
 		public function getData(){
 			$startTime = microtime(true);

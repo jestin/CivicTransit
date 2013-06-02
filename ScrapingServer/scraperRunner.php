@@ -1,13 +1,13 @@
 <?php
-	require_once "kcMetroScraper.php";
-	require_once "kcMetroDestination.php";
+	require_once "kcMetroRealtimeScraper.php";
+	require_once "kcMetroRealtimeDestination.php";
 
 	class scraperRunner {
 		public function runScraper($scraperId) {
 			switch($scraperId) {
 				case "kc-ata-vehicles-realtime":
-					$scraper = new kcMetroScraper();
-					$destination = new kcMetroDestination();
+					$scraper = new kcMetroRealtimeScraper();
+					$destination = new kcMetroRealtimeDestination();
 					break;
 				default:
 					throw new Exception("unknown scraper");
@@ -16,6 +16,7 @@
 
 			$data = $scraper->getData();
 			$destination->send($data);
+			return $data;
 		}
 	}
 ?>
